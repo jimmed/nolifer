@@ -1,0 +1,24 @@
+{
+  "name": "nolifer",
+  "version": "0.1.0",
+  "description": "Twitch bot for great justice",
+  "main": "index.js",
+  "author": "Jim O'Brien <npm@jimmed.net>",
+  "license": "Unlicense",
+  "scripts": {
+    "test": "xo && jest"
+  },
+  "devDependencies": {
+    "jest": "^19.0.2",
+    "xo": "^0.18.0"
+  },
+  "dependencies": {
+    "immutable": "^3.8.1",
+    "react": "next",
+    "react-dom": "next",
+    "react-redux": "^5.0.3",
+    "redux": "^3.6.0",
+    "redux-actions": "^2.0.1",
+    "redux-tree": "^0.3.2"
+  }
+}
