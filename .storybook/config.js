@@ -1,7 +1,7 @@
-import { configure } from '@kadira/storybook';
+const { configure } = require('@kadira/storybook')
 
 function loadStories() {
   require('../src/components/MessageEditor/storybook')
 }
 
-configure(loadStories, module);
+configure(loadStories, module)
