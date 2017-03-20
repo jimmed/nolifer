@@ -1,15 +1,22 @@
-const { createStore } = require('redux')
-const { createTree } = require('redux-tree')
+const {createStore} = require('redux')
+const {createTree} = require('redux-tree')
 const actions = require('./actions')
 const reducerBranch = require('./reducer')
 
-const reducer = createTree({ text: reducerBranch })
+const reducer = createTree({text: reducerBranch})
 
 describe('MessageEditor reducer', () => {
-  let store, state
+  let store
+  let state
+
   const updateState = () => {
     state = store.getState().text
   }
+  const dispatchAndUpdate = action => {
+    store.dispatch(action)
+    updateState()
+  }
+
   beforeEach(() => {
     store = createStore(reducer)
     updateState()
@@ -31,20 +38,16 @@ describe('MessageEditor reducer', () => {
   })
 
   describe('On change', () => {
-    beforeEach(() => {
-      store.dispatch(actions.changeText('Edited message!'))
-      updateState()
-    })
+    beforeEach(() => dispatchAndUpdate(actions.changeText('Edited message!')))
+
     test('should change', () => {
       expect(state).toBe('Edited message!')
     })
   })
 
   describe('After sending message', () => {
-    beforeEach(() => {
-      store.dispatch(actions.sendMessage('Sent message!'))
-      updateState()
-    })
+    beforeEach(() => dispatchAndUpdate(actions.sendMessage('Sent message!')))
+
     test('should reset', () => {
       expect(state).toBe('')
     })

@@ -1,11 +1,25 @@
 .container {
-
+  max-height: 50px;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: row;
 }
 
 .textInput {
-
+  background: white;
+  border: none;
+  outline: none;
+  flex: 1 1 calc(100% - 25px);
+  font-size: 1.8rem;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
 .sendButton {
-  
+  background: white;
+  border: none;
+  border-left: 1px solid black;
+  outline: none;
+  flex: 1 0 50px;
+  height: 50px;
 }

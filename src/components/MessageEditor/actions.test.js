@@ -10,7 +10,7 @@ describe('MessageEditor actions', () => {
       })
     })
   })
-  
+
   describe('sendMessage', () => {
     it('should fire with the right payload', () => {
       const result = actions.sendMessage('sent message')

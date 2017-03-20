@@ -1,8 +1,8 @@
-const { createActions } = require('redux-actions')
+const {createActions} = require('redux-actions')
 
 const actions = {
   CHANGE_TEXT: payload => payload,
-  SEND_MESSAGE: payload => payload
+  SEND_MESSAGE: payload => payload.trim()
 }
 
 module.exports = createActions(actions)

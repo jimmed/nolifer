@@ -6,10 +6,18 @@
   "author": "Jim O'Brien <npm@jimmed.net>",
   "license": "Unlicense",
   "scripts": {
-    "test": "xo && jest"
+    "test": "xo && jest",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "devDependencies": {
+    "@kadira/storybook": "^2.21.0",
+    "css-loader": "^0.27.3",
+    "eslint-config-xo": "^0.18.1",
+    "eslint-config-xo-react": "^0.11.0",
+    "eslint-plugin-react": "^6.10.2",
     "jest": "^19.0.2",
+    "style-loader": "^0.14.1",
     "xo": "^0.18.0"
   },
   "dependencies": {
@@ -20,5 +28,14 @@
     "redux": "^3.6.0",
     "redux-actions": "^2.0.1",
     "redux-tree": "^0.3.2"
+  },
+  "xo": {
+    "space": true,
+    "semicolon": false,
+    "envs": [
+      "jest",
+      "react"
+    ],
+    "extends": "xo-react"
   }
 }
