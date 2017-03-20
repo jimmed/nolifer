@@ -4,6 +4,10 @@ module.exports = {
   module: {
     loaders: [
       {
+        test: /\.js$/,
+        loader: 'babel-loader'
+      },
+      {
         test: /\.css$/,
         loaders: [
           'style-loader',

@@ -1,15 +1,15 @@
-import React from 'react'
-import style from './style.css'
+const React = require('react')
+const style = require('./style.css')
 
 function MessageEditor({text = '', actions}) {
   return (
     <div className={style.container}>
-      <TextInput
+      <MessageEditor.TextInput
         value={text}
         className={style.textInput}
         onChange={actions.changeText}
       />
-      <SendButton
+      <MessageEditor.SendButton
         className={style.sendButton}
         onClick={actions.sendMessage.bind(null, text)}
       />
@@ -25,7 +25,7 @@ MessageEditor.propTypes = {
   }).isRequired
 }
 
-function TextInput({value, className, onChange}) {
+MessageEditor.TextInput = ({value, className, onChange}) => {
   return (
     <input
       type="text"
@@ -36,19 +36,19 @@ function TextInput({value, className, onChange}) {
   )
 }
 
-TextInput.propTypes = {
+MessageEditor.TextInput.propTypes = {
   value: React.PropTypes.string.isRequired,
   className: React.PropTypes.string,
   onChange: React.PropTypes.func.isRequired
 }
 
-function SendButton({className, onClick}) {
+MessageEditor.SendButton = ({className, onClick}) => {
   return (
     <button type="button" onClick={onClick} className={className}>Send</button>
   )
 }
 
-SendButton.propTypes = {
+MessageEditor.SendButton.propTypes = {
   className: React.PropTypes.string,
   onClick: React.PropTypes.func.isRequired
 }
