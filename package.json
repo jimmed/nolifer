@@ -24,6 +24,7 @@
     "eslint-plugin-react": "^6.10.2",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^19.0.2",
+    "lodash": "^4.17.4",
     "react-addons-test-utils": "^15.4.2",
     "style-loader": "^0.14.1",
     "webpack": "^2.2.1",
