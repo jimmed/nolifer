@@ -15,12 +15,17 @@
   flex: 1 0 50px;
 }
 .content {
-  flex: 1 1 calc(100% - 100px);
+  flex: 1 1 100%;
 }
 .timestamp {
   text-align: right;
   font-style: italic;
-  flex: 1 0 50px;
+  flex: 1 0 150px;
+  opacity: 0;
+  transition: opacity .15s ease-in-out;
+}
+.message:hover .timestamp {
+  opacity: 1;
 }
 .noMessages {
   height: 100%;

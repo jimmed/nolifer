@@ -1,4 +1,6 @@
 const React = require('react')
+const distanceInWordsStrict = require('date-fns/distance_in_words_strict')
+const parseDate = require('date-fns/parse')
 const style = require('./style.css')
 
 class MessageHistory extends React.PureComponent {
@@ -60,7 +62,12 @@ MessageHistory.Message = ({sender, content, timestamp}) => (
   <div className={style.message}>
     <div className={style.sender}>{sender}</div>
     <div className={style.content}>{content}</div>
-    <div className={style.timestamp}>{timestamp}</div>
+    <div className={style.timestamp} title={parseDate(timestamp).toLocaleString()}>
+      {distanceInWordsStrict(Date.now(), timestamp, {
+        addSuffix: true,
+        includeSeconds: true
+      })}
+    </div>
   </div>
 )
 

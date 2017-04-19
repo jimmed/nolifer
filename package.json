@@ -30,6 +30,7 @@
     "webpack": "^2.2.1"
   },
   "dependencies": {
+    "date-fns": "^1.28.3",
     "immutable": "^3.8.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
