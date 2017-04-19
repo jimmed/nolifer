@@ -1,19 +1,27 @@
 const React = require('react');
+const PropTypes = require('prop-types');
+const cx = require('classnames');
 const Timestamp = require('../Timestamp');
 const style = require('./style.css');
 
 class MessageHistory extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.captureLastMessage = this.captureLastMessage.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
+    this.scrollIntoView = this.scrollIntoView.bind(this);
+    this.state = { scrolledUp: false };
   }
 
-  captureLastMessage(ref) {
-    this._lastMessage = ref;
+  handleScroll(event) {
+    const { target: { scrollTop, clientHeight, scrollHeight } } = event;
+    this.scrolledUp = scrollTop + clientHeight < scrollHeight;
+    this.setState(() => ({
+      scrolledUp: this.scrolledUp
+    }));
   }
 
-  scrollIntoView() {
-    if (this._lastMessage) {
+  scrollIntoView(force = false) {
+    if (this._lastMessage && (!this.scrolledUp || force)) {
       this._lastMessage.scrollIntoView({ behavior: 'smooth' });
     }
   }
@@ -30,45 +38,91 @@ class MessageHistory extends React.PureComponent {
     const { messages } = this.props;
     return (
       <div className={style.container}>
-        {messages.length
-          ? messages
-              .slice(-1000)
-              .map(message => (
-                <MessageHistory.Message key={message.id} {...message} />
-              ))
-              .concat([
-                <div
-                  className={style.afterLastMessage}
-                  key="afterLastMessage"
-                  ref={this.captureLastMessage}
-                />
-              ])
-          : <div className={style.noMessages}>
-              <p>{"It's a bit quiet in here!"}</p>
-            </div>}
+        <div className={style.scrollContainer} onScroll={this.handleScroll}>
+          {messages.length
+            ? groupMessages(messages.slice(-1000))
+                .map(group => (
+                  <MessageHistory.MessageGroup key={group.id} {...group} />
+                ))
+                .concat([
+                  <div
+                    className={style.afterLastMessage}
+                    key="afterLastMessage"
+                    ref={ref => this._lastMessage = ref}
+                  />
+                ])
+            : <div className={style.noMessages}>
+                <p>{"It's a bit quiet in here!"}</p>
+              </div>}
+        </div>
+        <div
+          className={cx(style.scrolledUp, this.scrolledUp && style.visible)}
+          onClick={() => this.scrollIntoView(true)}
+        >
+          Scroll down to latest
+        </div>
       </div>
     );
   }
 }
 
-MessageHistory.Message = ({ sender, content, timestamp }) => (
+function groupMessages(messages) {
+  let lastId = 0;
+  return messages.reduce((groups, message, i) => {
+    const lastGroup = groups[groups.length - 1];
+
+    const lastMessage =
+      lastGroup && lastGroup.messages[lastGroup.messages.length - 1];
+
+    const shouldCreateNewGroup =
+      !lastGroup ||
+      lastGroup.sender !== message.sender ||
+      lastMessage.timestamp + 30000 < message.timestamp;
+
+    if (shouldCreateNewGroup) {
+      groups.push({
+        id: ++lastId,
+        sender: message.sender,
+        messages: [message]
+      });
+    } else {
+      lastGroup.messages.push(message);
+    }
+    return groups;
+  }, []);
+}
+
+MessageHistory.Message = ({ content, timestamp }) => (
   <div className={style.message}>
-    <div className={style.sender}>{sender}</div>
-    <div className={style.content}>{content}</div>
+    <div className={style.messageContent}>{content}</div>
     <Timestamp className={style.timestamp} timestamp={timestamp} />
   </div>
 );
 
 MessageHistory.Message.propTypes = {
-  sender: React.PropTypes.string.isRequired,
-  content: React.PropTypes.string.isRequired,
-  timestamp: React.PropTypes.number.isRequired
+  content: PropTypes.node.isRequired,
+  timestamp: Timestamp.propTypes.timestamp
+};
+
+MessageHistory.MessageGroup = ({ sender, messages }) => (
+  <div className={style.messageGroup}>
+    <div className={style.sender}>{sender}</div>
+    <div className={style.content}>
+      {messages.map(message => (
+        <MessageHistory.Message key={message.id} {...message} />
+      ))}
+    </div>
+  </div>
+);
+
+MessageHistory.MessageGroup.propTypes = {
+  sender: PropTypes.node.isRequired,
+  messages: PropTypes.arrayOf(PropTypes.shape(MessageHistory.Message.propTypes))
 };
 
 MessageHistory.propTypes = {
-  messages: React.PropTypes.arrayOf(
-    React.PropTypes.shape(MessageHistory.Message.propTypes)
-  ).isRequired
+  messages: PropTypes.arrayOf(PropTypes.shape(MessageHistory.Message.propTypes))
+    .isRequired
 };
 
 module.exports = MessageHistory;

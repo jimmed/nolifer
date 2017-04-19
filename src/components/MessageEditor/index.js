@@ -1,7 +1,8 @@
-const React = require('react')
-const style = require('./style.css')
+const React = require('react');
+const PropTypes = require('prop-types');
+const style = require('./style.css');
 
-function MessageEditor({text = '', actions}) {
+function MessageEditor({ text = '', actions }) {
   return (
     <div className={style.container}>
       <MessageEditor.TextInput
@@ -14,43 +15,43 @@ function MessageEditor({text = '', actions}) {
         onClick={actions.sendMessage.bind(null, text)}
       />
     </div>
-  )
+  );
 }
 
 MessageEditor.propTypes = {
-  text: React.PropTypes.string.isRequired,
-  actions: React.PropTypes.shape({
-    sendMessage: React.PropTypes.func.isRequired,
-    changeText: React.PropTypes.func.isRequired
+  text: PropTypes.string.isRequired,
+  actions: PropTypes.shape({
+    sendMessage: PropTypes.func.isRequired,
+    changeText: PropTypes.func.isRequired
   }).isRequired
-}
+};
 
-MessageEditor.TextInput = ({value, className, onChange}) => {
+MessageEditor.TextInput = ({ value, className, onChange }) => {
   return (
     <input
       type="text"
       value={value}
-      onInput={({target}) => onChange(target.value)}
+      onInput={({ target }) => onChange(target.value)}
       className={className}
     />
-  )
-}
+  );
+};
 
 MessageEditor.TextInput.propTypes = {
-  value: React.PropTypes.string.isRequired,
-  className: React.PropTypes.string,
-  onChange: React.PropTypes.func.isRequired
-}
+  value: PropTypes.string.isRequired,
+  className: PropTypes.string,
+  onChange: PropTypes.func.isRequired
+};
 
-MessageEditor.SendButton = ({className, onClick}) => {
+MessageEditor.SendButton = ({ className, onClick }) => {
   return (
     <button type="button" onClick={onClick} className={className}>Send</button>
-  )
-}
+  );
+};
 
 MessageEditor.SendButton.propTypes = {
-  className: React.PropTypes.string,
-  onClick: React.PropTypes.func.isRequired
-}
+  className: PropTypes.string,
+  onClick: PropTypes.func.isRequired
+};
 
-module.exports = MessageEditor
+module.exports = MessageEditor;

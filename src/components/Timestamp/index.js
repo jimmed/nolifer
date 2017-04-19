@@ -1,4 +1,5 @@
 const React = require('react');
+const PropTypes = require('prop-types');
 const distanceInWordsStrict = require('date-fns/distance_in_words_strict');
 const parseDate = require('date-fns/parse');
 
@@ -76,5 +77,12 @@ class Timestamp extends React.PureComponent {
     return <span className={className} title={title}>{text}</span>;
   }
 }
+
+Timestamp.propTypes = {
+  timestamp: React.PropTypes.number.isRequired,
+  formatTitle: React.PropTypes.func,
+  formatText: React.PropTypes.func,
+  className: React.PropTypes.string
+};
 
 module.exports = Timestamp;
