@@ -6,7 +6,7 @@
   "author": "Jim O'Brien <npm@jimmed.net>",
   "license": "Unlicense",
   "scripts": {
-    "test": "xo && jest",
+    "test": "jest",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
@@ -27,8 +27,7 @@
     "lodash": "^4.17.4",
     "react-addons-test-utils": "^15.4.2",
     "style-loader": "^0.14.1",
-    "webpack": "^2.2.1",
-    "xo": "^0.18.0"
+    "webpack": "^2.2.1"
   },
   "dependencies": {
     "immutable": "^3.8.1",
@@ -38,15 +37,6 @@
     "redux": "^3.6.0",
     "redux-actions": "^2.0.1",
     "redux-tree": "^0.3.2"
-  },
-  "xo": {
-    "space": true,
-    "semicolon": false,
-    "envs": [
-      "jest",
-      "react"
-    ],
-    "extends": "xo-react"
   },
   "jest": {
     "moduleNameMapper": {
