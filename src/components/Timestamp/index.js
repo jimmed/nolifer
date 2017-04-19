@@ -46,11 +46,17 @@ class Timestamp extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    this._unsubscribeFromTick();
+    if (this._unsubscribeFromTick) {
+      this._unsubscribeFromTick();
+    }
   }
 
-  update() {
-    this.setState(() => this.stateFromProps(this.props));
+  componentWillReceiveProps(newProps) {
+    this.update(newProps);
+  }
+
+  update(props = this.props) {
+    this.setState(() => this.stateFromProps(props));
   }
 
   stateFromProps({
